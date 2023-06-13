@@ -40,13 +40,16 @@ function onGalleryItemClick() {
     .create(
       `<img width="1400" height="900" src="${event.target.dataset.source}">`,
       {
-        onShow: (instance) =>
-          window.addEventListener("keydown", (evt) => {
-            if (evt.key === "Escape") {
-              instance.close();
-            }
-          }),
+        onShow: (instance) => window.addEventListener("keydown", onEscKeyPress),
+        onClose: (instance) =>
+          window.removeEventListener("keydown", onEscKeyPress),
       }
     )
     .show();
+}
+
+function onEscKeyPress(event) {
+  if (event.key === "Escape") {
+    instance.close();
+  }
 }
