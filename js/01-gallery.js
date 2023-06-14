@@ -15,7 +15,7 @@ galleryContainer.addEventListener("click", (event) => {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
-  onGalleryItemClick();
+  onGalleryItemClick(event);
 });
 
 function createGalleryMarkup(items) {
@@ -35,21 +35,20 @@ function createGalleryMarkup(items) {
     .join("");
 }
 
-function onGalleryItemClick() {
-  const instance = basicLightbox
-    .create(
-      `<img width="1400" height="900" src="${event.target.dataset.source}">`,
-      {
-        onShow: (instance) => window.addEventListener("keydown", onEscKeyPress),
-        onClose: (instance) =>
-          window.removeEventListener("keydown", onEscKeyPress),
-      }
-    )
-    .show();
-}
+function onGalleryItemClick(event) {
+  const instance = basicLightbox.create(
+    `<img width="1400" height="900" src="${event.target.dataset.source}">`,
+    {
+      onShow: (instance) => window.addEventListener("keydown", onEscKeyPress),
+      onClose: (instance) =>
+        window.removeEventListener("keydown", onEscKeyPress),
+    }
+  );
+  instance.show();
 
-function onEscKeyPress(event) {
-  if (event.key === "Escape") {
-    instance.close();
+  function onEscKeyPress(event) {
+    if (event.key === "Escape") {
+      instance.close();
+    }
   }
 }
